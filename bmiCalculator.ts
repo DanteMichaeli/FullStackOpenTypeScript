@@ -10,5 +10,4 @@ const calculateBmi = (height: number, weight: number): string => {
     return "Obese";
   }
 };
-
 console.log(calculateBmi(180, 74));
