@@ -10,4 +10,24 @@ const calculateBmi = (height: number, weight: number): string => {
     return "Obese";
   }
 };
-console.log(calculateBmi(180, 74));
+
+// isolate the real input args from extra info
+const args = process.argv.slice(2);
+
+//input validation
+if (args.length !== 2) {
+  console.log(
+    "The function takes two positive numbers as args: height in cm and weight in kg."
+  );
+  process.exit(1);
+}
+
+const height = Number(args[0]);
+const weight = Number(args[1]);
+
+if (isNaN(height) || isNaN(weight) || height <= 0 || weight <= 0) {
+  console.log("One (or both) of the arguments is not a positive number.");
+  process.exit(1);
+}
+
+console.log(calculateBmi(height, weight));

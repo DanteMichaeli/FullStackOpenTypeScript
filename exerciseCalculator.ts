@@ -29,8 +29,35 @@ const calculateExercises = (hours: number[], target: number): Output => {
     target,
     average,
   };
-  console.log(ret);
+
   return ret;
 };
 
-calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2);
+// used for extracting the actual function args from the extra info
+// new name due to package.json file leading to scope var redeclaration conflict
+const argss = process.argv.slice(2);
+
+// input validation
+if (argss.length < 2) {
+  console.log(
+    "The function takes two+ arguments:\n1. target (number) - the target average of daily exercise hours (positive)\n2. daily hours - a sequence of numbers, representing daily exercise hours"
+  );
+  process.exit(1);
+}
+
+if (isNaN(Number(argss[0])) || Number(argss[0]) <= 0) {
+  console.log("The target must be a positive number.");
+  process.exit(1);
+}
+
+if (
+  argss.slice(1).some((a) => isNaN(Number(a))) ||
+  argss.slice(1).some((a) => Number(a) < 0)
+) {
+  console.log("All daily exercise hours must be non-negative numbers.");
+  process.exit(1);
+}
+
+const numberHours = argss.slice(1).map((a) => Number(a));
+
+console.log(calculateExercises(numberHours, Number(argss[0])));
