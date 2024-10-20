@@ -11,23 +11,27 @@ const calculateBmi = (height: number, weight: number): string => {
   }
 };
 
-// isolate the real input args from extra info
-const args = process.argv.slice(2);
+if (require.main === module) {
+  // isolate the real input args from extra info
+  const args = process.argv.slice(2);
 
-//input validation
-if (args.length !== 2) {
-  console.log(
-    "The function takes two positive numbers as args: height in cm and weight in kg."
-  );
-  process.exit(1);
+  //input validation
+  if (args.length !== 2) {
+    console.log(
+      "The function takes two positive numbers as args: height in cm and weight in kg."
+    );
+    process.exit(1);
+  }
+
+  const height = Number(args[0]);
+  const weight = Number(args[1]);
+
+  if (isNaN(height) || isNaN(weight) || height <= 0 || weight <= 0) {
+    console.log("One (or both) of the arguments is not a positive number.");
+    process.exit(1);
+  }
+
+  console.log(calculateBmi(height, weight));
 }
 
-const height = Number(args[0]);
-const weight = Number(args[1]);
-
-if (isNaN(height) || isNaN(weight) || height <= 0 || weight <= 0) {
-  console.log("One (or both) of the arguments is not a positive number.");
-  process.exit(1);
-}
-
-console.log(calculateBmi(height, weight));
+export { calculateBmi };
